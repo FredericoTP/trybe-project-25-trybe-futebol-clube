@@ -14,7 +14,8 @@ TeamModel.init({
     autoIncrement: true,
   },
   teamName: {
-    type: STRING
+    type: STRING,
+    allowNull: false,
   }
 }, {
   sequelize: db,
