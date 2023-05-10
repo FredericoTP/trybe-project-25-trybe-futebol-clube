@@ -1,7 +1,7 @@
-import { Model, INTEGER, BOOLEAN } from "sequelize";
+import { Model, INTEGER, BOOLEAN } from 'sequelize';
 import db from '.';
 
-import TeamModel from "./TeamModel";
+import TeamModel from './TeamModel';
 
 class MatchModel extends Model {
   declare id: number;
@@ -38,7 +38,7 @@ MatchModel.init({
   inProgress: {
     type: BOOLEAN,
     allowNull: false,
-  }
+  },
 }, {
   sequelize: db,
   modelName: 'matches',
@@ -46,7 +46,7 @@ MatchModel.init({
   underscored: true,
 });
 
-MatchModel.belongsTo(TeamModel, { foreignKey: "homeTeamId", as: "homeTeam" });
-MatchModel.belongsTo(TeamModel, { foreignKey: "awayTeamId", as: "awayTeam" });
+MatchModel.belongsTo(TeamModel, { foreignKey: 'homeTeamId', as: 'homeTeam' });
+MatchModel.belongsTo(TeamModel, { foreignKey: 'awayTeamId', as: 'awayTeam' });
 
 export default MatchModel;

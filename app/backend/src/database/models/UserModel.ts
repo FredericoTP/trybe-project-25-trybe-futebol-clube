@@ -1,4 +1,4 @@
-import { Model, INTEGER, STRING } from "sequelize";
+import { Model, INTEGER, STRING } from 'sequelize';
 import db from '.';
 
 class UserModel extends Model {
@@ -31,7 +31,7 @@ UserModel.init({
   password: {
     type: STRING,
     allowNull: false,
-  }
+  },
 }, {
   sequelize: db,
   modelName: 'teams',
