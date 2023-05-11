@@ -1,4 +1,4 @@
-import { Matches, GoalsCount } from '../interfaces/LeaderboardInterface';
+import { Matches, GoalsCount, Leaderboard } from '../interfaces/LeaderboardInterface';
 
 class HandleLeaderboard {
   public static matchStatus(name:string, matches: Matches[]) {
@@ -74,6 +74,30 @@ class HandleLeaderboard {
     const totalGames = matches.length;
 
     return +((totalPoints / (totalGames * 3)) * 100).toFixed(2);
+  }
+
+  public static sortMatches(matches: Leaderboard[]) {
+    return matches.sort((a, b) => {
+      if (a.totalPoints > b.totalPoints) {
+        return -1;
+      } if (a.totalPoints < b.totalPoints) {
+        return 1;
+      }
+
+      if (a.goalsBalance > b.goalsBalance) {
+        return -1;
+      } if (a.goalsBalance < b.goalsBalance) {
+        return 1;
+      }
+
+      if (a.goalsFavor > b.goalsFavor) {
+        return -1;
+      } if (a.goalsFavor < b.goalsFavor) {
+        return 1;
+      }
+
+      return 0;
+    });
   }
 }
 

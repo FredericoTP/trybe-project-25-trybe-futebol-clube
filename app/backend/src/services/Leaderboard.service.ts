@@ -12,7 +12,9 @@ class LeaderboardService {
       return HandleLeaderboard.matchStatus(team.teamName, matches);
     }));
 
-    return { type: null, message: homeMatches };
+    const sorted = HandleLeaderboard.sortMatches(homeMatches);
+
+    return { type: null, message: sorted };
   }
 }
 
