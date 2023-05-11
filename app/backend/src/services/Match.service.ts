@@ -114,6 +114,16 @@ class MatchService {
 
     return { type: null, message: match };
   }
+
+  public static async findByAwayId(id: number) {
+    const match = await MatchModel.findAll({
+      where: { awayTeamId: id, inProgress: false },
+    });
+
+    if (!match) return { type: 'matchNotFound', message: [] };
+
+    return { type: null, message: match };
+  }
 }
 
 export default MatchService;

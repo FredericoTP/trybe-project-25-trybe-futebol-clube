@@ -1,29 +1,29 @@
 import { Matches, GoalsCount, Leaderboard } from '../interfaces/LeaderboardInterface';
 
-class HandleLeaderboard {
+class HandleLeaderboardAway {
   public static matchStatus(name:string, matches: Matches[]) {
-    const goalsCount = HandleLeaderboard.goalsCount(matches);
+    const goalsCount = HandleLeaderboardAway.goalsCount(matches);
 
     return {
       name,
-      totalPoints: HandleLeaderboard.totalPoints(matches),
+      totalPoints: HandleLeaderboardAway.totalPoints(matches),
       totalGames: matches.length,
-      totalVictories: HandleLeaderboard.totalVictories(matches),
-      totalDraws: HandleLeaderboard.totalDraws(matches),
-      totalLosses: HandleLeaderboard.totalLosses(matches),
+      totalVictories: HandleLeaderboardAway.totalVictories(matches),
+      totalDraws: HandleLeaderboardAway.totalDraws(matches),
+      totalLosses: HandleLeaderboardAway.totalLosses(matches),
       goalsFavor: goalsCount.favor,
       goalsOwn: goalsCount.own,
       goalsBalance: goalsCount.balance,
-      efficiency: HandleLeaderboard.efficiency(matches),
+      efficiency: HandleLeaderboardAway.efficiency(matches),
     };
   }
 
   public static totalPoints(matches: Matches[]): number {
     return matches.reduce((acc, cur) => {
-      if (cur.homeTeamGoals > cur.awayTeamGoals) {
+      if (cur.awayTeamGoals > cur.homeTeamGoals) {
         return acc + 3;
       }
-      if (cur.homeTeamGoals === cur.awayTeamGoals) {
+      if (cur.awayTeamGoals === cur.homeTeamGoals) {
         return acc + 1;
       }
 
@@ -33,7 +33,7 @@ class HandleLeaderboard {
 
   public static totalVictories(matches: Matches[]): number {
     return matches.reduce((acc, cur) => {
-      if (cur.homeTeamGoals > cur.awayTeamGoals) {
+      if (cur.awayTeamGoals > cur.homeTeamGoals) {
         return acc + 1;
       }
 
@@ -43,7 +43,7 @@ class HandleLeaderboard {
 
   public static totalDraws(matches: Matches[]): number {
     return matches.reduce((acc, cur) => {
-      if (cur.homeTeamGoals === cur.awayTeamGoals) {
+      if (cur.awayTeamGoals === cur.homeTeamGoals) {
         return acc + 1;
       }
 
@@ -53,7 +53,7 @@ class HandleLeaderboard {
 
   public static totalLosses(matches: Matches[]): number {
     return matches.reduce((acc, cur) => {
-      if (cur.homeTeamGoals < cur.awayTeamGoals) {
+      if (cur.awayTeamGoals < cur.homeTeamGoals) {
         return acc + 1;
       }
 
@@ -62,15 +62,15 @@ class HandleLeaderboard {
   }
 
   public static goalsCount(matches: Matches[]): GoalsCount {
-    const favor = matches.reduce((acc, cur) => acc + cur.homeTeamGoals, 0);
-    const own = matches.reduce((acc, cur) => acc + cur.awayTeamGoals, 0);
+    const favor = matches.reduce((acc, cur) => acc + cur.awayTeamGoals, 0);
+    const own = matches.reduce((acc, cur) => acc + cur.homeTeamGoals, 0);
     const balance = favor - own;
 
     return { favor, own, balance };
   }
 
   public static efficiency(matches: Matches[]): number {
-    const totalPoints = HandleLeaderboard.totalPoints(matches);
+    const totalPoints = HandleLeaderboardAway.totalPoints(matches);
     const totalGames = matches.length;
 
     return +((totalPoints / (totalGames * 3)) * 100).toFixed(2);
@@ -101,4 +101,4 @@ class HandleLeaderboard {
   }
 }
 
-export default HandleLeaderboard;
+export default HandleLeaderboardAway;
