@@ -1,6 +1,7 @@
 import MatchModel from '../database/models/MatchModel';
 import TeamModel from '../database/models/TeamModel';
-import { validateId } from './validations/validationInputValues';
+import { validateId, validateGoalsFields } from './validations/validationInputValues';
+import Goals from '../interfaces/MatchInterface';
 
 class MatchService {
   public static async getAll() {
@@ -61,6 +62,21 @@ class MatchService {
     await MatchModel.update({ inProgress: false }, { where: { id } });
 
     return { type: null, message: 'Finished' };
+  }
+
+  public static async updateGoals(id: number, body: Goals) {
+    const error = validateGoalsFields(body);
+    if (error.type) return error;
+
+    const match = await MatchService.findById(id);
+
+    if (match.type) return match;
+
+    const { homeTeamGoals, awayTeamGoals } = body;
+
+    await MatchModel.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+
+    return { type: null, message: 'Updated' };
   }
 }
 

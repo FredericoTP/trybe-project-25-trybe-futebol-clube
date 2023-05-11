@@ -1,6 +1,7 @@
 import UserLogin from '../../interfaces/UserInterface';
+import Goals from '../../interfaces/MatchInterface';
 import { ValidationSuccess, ValidationError } from '../../interfaces/ValidationInterface';
-import { idSchema, emailSchema, loginSchema } from './schemas';
+import { idSchema, emailSchema, loginSchema, updateGoalSchema } from './schemas';
 
 const validateId = (id: number): ValidationSuccess | ValidationError => {
   const { error } = idSchema.validate(id);
@@ -26,4 +27,12 @@ const validateLoginFields = (userInfo: UserLogin): ValidationSuccess | Validatio
   return { type: null, message: '' };
 };
 
-export { validateId, validateEmail, validateLoginFields };
+const validateGoalsFields = (goal: Goals): ValidationSuccess | ValidationError => {
+  const { error } = updateGoalSchema.validate(goal);
+
+  if (error) return { type: 'invalidValue', message: error.message };
+
+  return { type: null, message: '' };
+};
+
+export { validateId, validateEmail, validateLoginFields, validateGoalsFields };

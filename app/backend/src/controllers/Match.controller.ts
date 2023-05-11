@@ -30,6 +30,17 @@ class MatchController {
 
     return res.status(200).json({ message });
   }
+
+  public static async updateGoals(req: Request, res: Response) {
+    const { id } = req.params;
+    const { awayTeamGoals, homeTeamGoals } = req.body;
+
+    const { type, message } = await MatchService.updateGoals(+id, { awayTeamGoals, homeTeamGoals });
+
+    if (type) return res.status(mapError(type)).json({ message });
+
+    return res.status(200).json({ message });
+  }
 }
 
 export default MatchController;
