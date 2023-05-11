@@ -14,11 +14,11 @@ class UserService {
       where: { email },
     });
 
-    if (!user) return { type: 'badRequest', message: 'Email or password invalid' };
+    if (!user) return { type: 'unauthorized', message: 'Invalid email or password' };
 
     const isValid = bcrypt.compareSync(password, user.password);
 
-    if (!isValid) return { type: 'badRequest', message: 'Email or password invalid' };
+    if (!isValid) return { type: 'unauthorized', message: 'Invalid email or password' };
 
     return { type: null, message: user };
   }

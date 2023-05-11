@@ -21,7 +21,7 @@ const validateEmail = (email: string): ValidationSuccess | ValidationError => {
 const validateLoginFields = (userInfo: UserLogin): ValidationSuccess | ValidationError => {
   const { error } = loginSchema.validate(userInfo);
 
-  if (error) return { type: 'invalidValue', message: error.message };
+  if (error) return { type: 'unauthorized', message: 'Invalid email or password' };
 
   return { type: null, message: '' };
 };
