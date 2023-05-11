@@ -3,4 +3,12 @@ interface Goals {
   awayTeamGoals: number;
 }
 
+interface newTeam {
+  homeTeamId: number;
+  awayTeamId: number;
+  homeTeamGoals: number;
+  awayTeamGoals: number;
+}
+
 export default Goals;
+export { newTeam };

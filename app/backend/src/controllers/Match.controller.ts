@@ -41,6 +41,18 @@ class MatchController {
 
     return res.status(200).json({ message });
   }
+
+  public static async addMatch(req: Request, res: Response) {
+    const { homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals } = req.body;
+
+    const { type, message } = await MatchService.addMatch(
+      { homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals },
+    );
+
+    if (type) return res.status(mapError(type)).json({ message });
+
+    return res.status(201).json(message);
+  }
 }
 
 export default MatchController;

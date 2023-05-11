@@ -1,7 +1,8 @@
 import MatchModel from '../database/models/MatchModel';
 import TeamModel from '../database/models/TeamModel';
+import TeamService from './Team.service';
 import { validateId, validateGoalsFields } from './validations/validationInputValues';
-import Goals from '../interfaces/MatchInterface';
+import Goals, { newTeam } from '../interfaces/MatchInterface';
 
 class MatchService {
   public static async getAll() {
@@ -77,6 +78,31 @@ class MatchService {
     await MatchModel.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
 
     return { type: null, message: 'Updated' };
+  }
+
+  private static async checkTeamExists(homeTeamId: number, awayTeamId: number): Promise<boolean> {
+    const homeTeam = await TeamService.getById(homeTeamId);
+    const awayTeam = await TeamService.getById(awayTeamId);
+
+    if (homeTeam.type || awayTeam.type) {
+      return false;
+    }
+
+    return true;
+  }
+
+  public static async addMatch(match: newTeam) {
+    const { homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals } = match;
+
+    const isValid = await MatchService.checkTeamExists(homeTeamId, awayTeamId);
+
+    if (!isValid) return { type: 'teamNotFound', message: 'There is no team with such id!' };
+
+    const newMatch = await MatchModel.create(
+      { homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals },
+    );
+
+    return { type: null, message: newMatch };
   }
 }
 
