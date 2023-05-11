@@ -3,6 +3,7 @@ const errorMap: Record<string, number> = {
   badRequest: 400,
   unauthorized: 401,
   teamNotFound: 404,
+  matchNotFound: 404,
 };
 
 const mapError = (type: string): number => errorMap[type] || 500;
