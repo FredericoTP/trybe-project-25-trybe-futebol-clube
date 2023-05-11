@@ -1,14 +1,8 @@
 import { Response, Request } from 'express';
-import TeamService from '../services';
+import { TeamService } from '../services';
 import { mapError } from '../utils/errorMap';
 
 class TeamController {
-  teamService: TeamService;
-
-  constructor(teamService = new TeamService()) {
-    this.teamService = teamService;
-  }
-
   public static async getAll(_req: Request, res: Response) {
     const { type, message } = await TeamService.getAll();
 

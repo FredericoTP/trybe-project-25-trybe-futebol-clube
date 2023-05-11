@@ -1,5 +1,5 @@
 import TeamModel from '../database/models/TeamModel';
-import validateId from './validations/validationInputValues';
+import { validateId } from './validations/validationInputValues';
 
 class TeamService {
   public static async getAll() {
