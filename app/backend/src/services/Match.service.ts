@@ -19,6 +19,25 @@ class MatchService {
 
     return { type: null, message: teams };
   }
+
+  public static async getAllSorted(progress: number) {
+    const teams = await MatchModel.findAll({
+      where: { inProgress: progress },
+      include: [
+        {
+          model: TeamModel,
+          as: 'homeTeam',
+          attributes: { exclude: ['id'] },
+        },
+        {
+          model: TeamModel,
+          as: 'awayTeam',
+          attributes: { exclude: ['id'] },
+        }],
+    });
+
+    return { type: null, message: teams };
+  }
 }
 
 export default MatchService;
