@@ -13,7 +13,6 @@ class UserService {
     const user = await UserModel.findOne({
       where: { email },
     });
-
     if (!user) return { type: 'unauthorized', message: 'Invalid email or password' };
 
     const isValid = bcrypt.compareSync(password, user.password);

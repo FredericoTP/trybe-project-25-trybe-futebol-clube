@@ -1,3 +1,4 @@
 import validateLogin from './validateLogin';
+import tokenValidation from './validateToken';
 
-export default validateLogin;
+export { validateLogin, tokenValidation };

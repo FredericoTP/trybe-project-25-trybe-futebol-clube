@@ -12,6 +12,12 @@ class LoginController {
 
     return res.status(200).json(message);
   }
+
+  public static getRole(req: Request, res: Response) {
+    const { infoToken } = req.body;
+
+    return res.status(200).json({ role: infoToken.role });
+  }
 }
 
 export default LoginController;

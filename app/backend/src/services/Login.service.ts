@@ -9,7 +9,11 @@ class LoginService {
 
     if (user.type) return user;
 
-    const token = generateToken({ email });
+    let role = '';
+
+    if (typeof user.message !== 'string') role = user.message.role;
+
+    const token = generateToken({ email, role });
 
     return { type: null, message: { token } };
   }
