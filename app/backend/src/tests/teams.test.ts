@@ -13,7 +13,7 @@ const { expect } = chai;
 describe('Team Router', () => {
   afterEach(() => {
     sinon.restore();
-  })
+  });
 
   describe('GET /teams', () => {
     describe('Feita a chamada', () => {

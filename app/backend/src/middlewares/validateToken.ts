@@ -8,6 +8,7 @@ const tokenValidation = (req: Request, res: Response, next: NextFunction) => {
     if (!authorization) return res.status(401).json({ message: 'Token not found' });
 
     const infoToken = validateToken(authorization);
+
     req.body.infoToken = infoToken;
 
     next();
