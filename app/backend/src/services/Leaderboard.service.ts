@@ -2,6 +2,7 @@ import TeamService from './Team.service';
 import MatchService from './Match.service';
 import HandleLeaderboardHome from '../utils/handleLeaderboardHome';
 import HandleLeaderboardAway from '../utils/handleLeaderboardAway';
+import HandleLeaderboard from '../utils/handleLeaderboard';
 
 class LeaderboardService {
   public static async getLeaderBoardHome() {
@@ -28,6 +29,22 @@ class LeaderboardService {
     }));
 
     const sorted = HandleLeaderboardAway.sortMatches(awayMatches);
+
+    return { type: null, message: sorted };
+  }
+
+  public static async getLeaderboard() {
+    const { message: teams } = await TeamService.getAll();
+
+    const allMatches = await Promise.all(teams.map(async (team) => {
+      const { message: homeMatches } = await MatchService.findByHomeId(team.id);
+
+      const { message: awayMatches } = await MatchService.findByAwayId(team.id);
+
+      return HandleLeaderboard.matchStatus(team.teamName, awayMatches, homeMatches);
+    }));
+
+    const sorted = HandleLeaderboardAway.sortMatches(allMatches);
 
     return { type: null, message: sorted };
   }
