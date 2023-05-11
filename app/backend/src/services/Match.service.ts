@@ -104,6 +104,16 @@ class MatchService {
 
     return { type: null, message: newMatch };
   }
+
+  public static async findByHomeId(id: number) {
+    const match = await MatchModel.findAll({
+      where: { homeTeamId: id },
+    });
+
+    if (!match) return { type: 'matchNotFound', message: [] };
+
+    return { type: null, message: match };
+  }
 }
 
 export default MatchService;
